@@ -184,6 +184,9 @@ public class ClientUI {
  			(ClientUI.class.getResource("sendBtn.css").toExternalForm());
 		sendBtn.setOnAction(e->{
 			if(!textField.getText().trim().isEmpty()) {
+				if (roundGameInfo.chance != '\u0000') {
+					Hchance = roundGameInfo.chance;
+				}
 				clientConnection.send(playerID, Hchance, Character.toLowerCase(textField.getText().charAt(0)));
 				textField.clear();
 			}

@@ -116,17 +116,9 @@ public class Server {
 					        System.out.println("test: " + gameInfoTemp.chance);
 							callback.accept("Player" + gameInfoTemp.playerID + " choose category: " + gameInfoTemp.message
 									+ "; Word is " + word);
-							
-							//update
 							callback.accept("Player" + gameInfoTemp.playerID + " have " + gameInfoTemp.chance  + " chance.");
-							// update
-							
 							sendMsgToClient(playerID, "Your word length is " + word.length());
-							
-							// update
 							sendMsgToClient(playerID, "You have " + gameInfoTemp.chance  + " chance");
-							// update
-							
 							answers.set(playerID - 1, word);
 						}
 						
@@ -136,16 +128,9 @@ public class Server {
 							String word = animals.get(rand.nextInt(animals.size()));
 							callback.accept("Player" + gameInfoTemp.playerID + " choose category: " + gameInfoTemp.message
 									+ "; Word is " + word);
-							//update
 							callback.accept("Player" + gameInfoTemp.playerID + " have " +  gameInfoTemp.chance  + " chance.");
-							// update
-							
 							sendMsgToClient(playerID, "Your word length is " + word.length());
-							
-							// update
 							sendMsgToClient(playerID, "You have " + gameInfoTemp.chance  + " chance");
-							// update
-							
 							answers.set(playerID - 1, word);
 						}
 						
@@ -155,17 +140,9 @@ public class Server {
 							String word = states.get(rand.nextInt(states.size()));
 							callback.accept("Player" + gameInfoTemp.playerID + " choose category: " + gameInfoTemp.message
 									+ "; Word is " + word);
-							
-							//update
 							callback.accept("Player" + gameInfoTemp.playerID + " have " +  gameInfoTemp.chance  + " chance.");
-							// update
-							
 							sendMsgToClient(playerID, "Your word length is " + word.length());
-							
-							// update
 							sendMsgToClient(playerID, "You have " + gameInfoTemp.chance  + " chance");
-							// update
-							
 							answers.set(playerID - 1, word);
 						}
 					}
@@ -174,7 +151,6 @@ public class Server {
 						char letter = gameInfoTemp.letter;
 						System.out.println("Player" + gameInfoTemp.playerID + " guess letter: " + letter);
 						callback.accept("Player" + gameInfoTemp.playerID + " guess letter: " + letter);
-						// callback.accept("Player" + gameInfoTemp.playerID + " still have " + gameInfoTemp.chance + " chance");
 						parseLetter(gameInfoTemp);
 					}
 				}
@@ -202,8 +178,14 @@ public class Server {
 		}
 		//wrong guess
 		else {
-			sendResultToClient(playerID, "Better luck next time: " + letter + " \nYou only have " + (gameInfo.chance -1) + " chance.", gameInfo, false);
-			callback.accept("wrong guess: only have " + (gameInfo.chance -1) + " chance.");
+			if ((gameInfo.chance - 1) > 0) {
+				sendResultToClient(playerID, "Better luck next time: " + letter + " \nYou only have " + (gameInfo.chance -1) + " chance.", gameInfo, false);
+				callback.accept("wrong guess: only have " + (gameInfo.chance -1) + " chance.");
+			}
+			else if ((gameInfo.chance - 1) == 0) {
+				sendResultToClient(playerID, "You have no chance, Game Over", gameInfo, false);
+				callback.accept("Player" + playerID + " lost game.");
+			}
 		}
 	}
 	

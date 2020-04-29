@@ -68,19 +68,6 @@ public class Client extends Thread{
 	
     }
 	
-//	//send chance to server
-//		public void send(int playerID, int Hchance) {
-//			GameInfo newGameInfo = new GameInfo();
-//			newGameInfo.playerID = playerID;
-//			newGameInfo.chance = Hchance;
-//			System.out.println("client test: " + newGameInfo.chance);
-//			try {
-//				out.writeObject(newGameInfo);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-	
 	//send char/letter to server
 	public void send(int playerID, int Hchance, char letter) {
 		GameInfo newGameInfo = new GameInfo();
